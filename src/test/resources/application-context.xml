@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:app="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-				
+
+	<context:property-placeholder location="classpath*:locations.properties"/>
+	<app:aspectj-autoproxy />
+	<context:annotation-config/>
+	<context:component-scan base-package="com.luxoft.springcore"/>
+
+	<!--Cities	-->
+	<bean id="moscow" class="com.luxoft.springcore.objects.City">
+		<property name="id" value="1" />
+		<property name="name" value="Moscow" />
+		<property name="country" ref="russia" />
+	</bean>
+	<bean id="warsaw" class="com.luxoft.springcore.objects.City">
+		<property name="id" value="2" />
+		<property name="name" value="Warsaw" />
+		<property name="country" ref="poland" />
+	</bean>
+	<bean id="krakow" class="com.luxoft.springcore.objects.City">
+		<property name="id" value="3" />
+		<property name="name" value="Krakow" />
+		<property name="country" ref="poland" />
+	</bean>
+	<bean id="sofia" class="com.luxoft.springcore.objects.City">
+		<property name="id" value="4" />
+		<property name="name" value="Sofia" />
+		<property name="country" ref="bulgaria" />
+	</bean>
+	<bean id="vienna" class="com.luxoft.springcore.objects.City">
+		<property name="id" value="5" />
+		<property name="name" value="Vienna" />
+		<property name="country" ref="austria" />
+	</bean>
+
+	<!--Countries	-->
+	<bean name="russia" class="com.luxoft.springcore.objects.Country">
+		<property name="id" value="1"/>
+		<property name="name" value="${russia.name}"/>
+		<property name="codeName" value="${russia.codeName}"/>
+	</bean>
+	<bean name="austria" class="com.luxoft.springcore.objects.Country">
+		<property name="id" value="2"/>
+		<property name="name" value="${austria.name}"/>
+		<property name="codeName" value="${austria.codeName}"/>
+	</bean>
+	<bean name="poland" class="com.luxoft.springcore.objects.Country">
+		<property name="id" value="3"/>
+		<property name="name" value="${poland.name}"/>
+		<property name="codeName" value="${poland.codeName}"/>
+	</bean>
+	<bean name="bulgaria" class="com.luxoft.springcore.objects.Country">
+		<property name="id" value="4"/>
+		<property name="name" value="${bulgaria.name}"/>
+		<property name="codeName" value="${bulgaria.codeName}"/>
+	</bean>
+
+	<!--Persons	-->
+	<bean id="russianPerson" class="com.luxoft.springcore.objects.UsualPerson">
+		<property name="id" value="1" />
+		<property name="name" value="Viktor Ponedelnik" />
+		<property name="age" value="35" />
+		<property name="city" value="#{moscow}" />
+		<property name="isProgrammer" value="false" />
+		<property name="distanceTravelled" value="1386"/>
+	</bean>
+	<bean id="bulgarianPerson" class="com.luxoft.springcore.objects.UsualPerson">
+		<property name="id" value="2" />
+		<property name="name" value="Emil Kostadinov" />
+		<property name="age" value="37" />
+		<property name="city" value="#{sofia}" />
+		<property name="isProgrammer" value="false" />
+		<property name="distanceTravelled" value="1166"/>
+	</bean>
+
+	<!--Operators	-->
+	<bean id="operatorsBean" class="com.luxoft.springcore.objects.Operators">
+		<property name="ageComparisonTest"
+				  value="#{russianPerson.age == 35 and bulgarianPerson.age == 37}" />
+		<property name="distanceComparisonTest"
+				  value="#{russianPerson.distanceTravelled == 1386 and bulgarianPerson.distanceTravelled == 1166}" />
+	</bean>
+
+	<!--Services	-->
+	<bean id="personManager" class="com.luxoft.springcore.services.PersonManager"/>
+
+	<!--Aspects	-->
+	<bean id="loggingAscpects" class="com.luxoft.springcore.aspects.LoggingAspect"/>
 </beans>

@@ -1,17 +1,28 @@
 package com.luxoft.springcore.objects;
 
+import com.luxoft.springcore.services.PersonManager;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class UsualPerson implements Person {
+
+    @Autowired
+    private PersonManager personManager;
+
     private int id;
 
     private String name;
+
     private City city;
     private int distanceTravelled = 0;
     
 	private int age;
 	private boolean isProgrammer;
-    
+
+    public UsualPerson() {
+    }
+
     public UsualPerson(String name, int age, City city) {
-    	this.name = name;
+        this.name = name;
     	this.age = age;
     	this.city = city;
     }
@@ -36,7 +47,7 @@ public class UsualPerson implements Person {
         return city;
     }
 
-    public void setCountry(City city) {
+    public void setCity(City city) {
         this.city = city;
     }
     
@@ -67,7 +78,7 @@ public class UsualPerson implements Person {
     
     
     public void travel(City source, City destination) {
-    	
+        personManager.publishPersonEvent(this, destination);
     }
 
     public String toString() {
