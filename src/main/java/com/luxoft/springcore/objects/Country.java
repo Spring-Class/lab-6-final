@@ -1,6 +1,5 @@
 package com.luxoft.springcore.objects;
 
-
 import java.io.Serializable;
 
 public class Country implements Serializable{
