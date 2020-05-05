@@ -4,12 +4,16 @@ public class UsualPerson implements Person {
     private int id;
 
     private String name;
+
     private City city;
     private int distanceTravelled = 0;
     
 	private int age;
 	private boolean isProgrammer;
-    
+
+    public UsualPerson() {
+    }
+
     public UsualPerson(String name, int age, City city) {
     	this.name = name;
     	this.age = age;
@@ -36,7 +40,7 @@ public class UsualPerson implements Person {
         return city;
     }
 
-    public void setCountry(City city) {
+    public void setCity(City city) {
         this.city = city;
     }
     
@@ -67,7 +71,12 @@ public class UsualPerson implements Person {
     
     
     public void travel(City source, City destination) {
-    	
+        String personName = this.getName();
+        String cityDestinationName = destination.getName();
+        Country countryDestination = destination.getCountry();
+
+        System.out.println(String.format("%s has arrived to %s, %s",
+                personName, cityDestinationName, countryDestination));
     }
 
     public String toString() {
